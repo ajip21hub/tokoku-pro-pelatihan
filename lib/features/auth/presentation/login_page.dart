@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// UI login dari starter (form dan validasi sudah dibahas di materi `day7`).
-///
-/// Lab 2A (Hari 2): ubah menjadi `ConsumerStatefulWidget`, panggil
-/// `authControllerProvider.notifier.login(...)` di `_submit`, tampilkan error
-/// dengan `ref.listen`, dan nonaktifkan tombol selama loading.
-class LoginPage extends StatefulWidget {
+import '../../../core/error/failure.dart';
+import 'auth_controller.dart';
+
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  // Akun uji dummyjson.com
   final _username = TextEditingController(text: 'emilys');
   final _password = TextEditingController(text: 'emilyspass');
 
@@ -25,17 +23,29 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
-    // TODO(Lab 2A): panggil AuthController.login. Jangan memanggil
-    // context.go di sini; router redirect yang memindahkan halaman.
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Login belum dihubungkan (Lab 2A)')),
-    );
+    await ref
+        .read(authControllerProvider.notifier)
+        .login(_username.text.trim(), _password.text);
+    // Navigasi TIDAK dilakukan di sini: router redirect akan bereaksi
+    // otomatis saat authControllerProvider berisi user.
   }
 
   @override
   Widget build(BuildContext context) {
+    // Tampilkan error sekali (side-effect) dengan ref.listen, bukan di build.
+    ref.listen(authControllerProvider, (prev, next) {
+      if (next case AsyncError(:final error)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(error is Failure ? error.message : 'Login gagal'),
+          ),
+        );
+      }
+    });
+    final isLoading = ref.watch(authControllerProvider).isLoading;
+
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
@@ -70,8 +80,13 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 24),
                 FilledButton(
                   key: const Key('login-button'),
-                  onPressed: _submit,
-                  child: const Text('Masuk'),
+                  onPressed: isLoading ? null : _submit,
+                  child: isLoading
+                      ? const SizedBox.square(
+                          dimension: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Text('Masuk'),
                 ),
               ],
             ),

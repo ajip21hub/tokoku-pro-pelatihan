@@ -8,28 +8,12 @@ part of 'dio_client.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Versi Hari 1: Dio dasar untuk katalog dummyjson.
-///
-/// Pada Hari 2 (Sesi 1–3) file ini diganti dengan versi produksi: base URL
-/// dari `Env` (`--dart-define-from-file`), `AuthInterceptor`, dan
-/// certificate pinning.
 
 @ProviderFor(dio)
 final dioProvider = DioProvider._();
 
-/// Versi Hari 1: Dio dasar untuk katalog dummyjson.
-///
-/// Pada Hari 2 (Sesi 1–3) file ini diganti dengan versi produksi: base URL
-/// dari `Env` (`--dart-define-from-file`), `AuthInterceptor`, dan
-/// certificate pinning.
-
 final class DioProvider extends $FunctionalProvider<Dio, Dio, Dio>
     with $Provider<Dio> {
-  /// Versi Hari 1: Dio dasar untuk katalog dummyjson.
-  ///
-  /// Pada Hari 2 (Sesi 1–3) file ini diganti dengan versi produksi: base URL
-  /// dari `Env` (`--dart-define-from-file`), `AuthInterceptor`, dan
-  /// certificate pinning.
   DioProvider._()
     : super(
         from: null,
@@ -63,4 +47,4 @@ final class DioProvider extends $FunctionalProvider<Dio, Dio, Dio>
   }
 }
 
-String _$dioHash() => r'03245015c70126c684fb3f2decf68945ec0cd09d';
+String _$dioHash() => r'05b7d9e096505d47bf85efe36e9cc52272fd6e2c';
