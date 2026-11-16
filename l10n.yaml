@@ -1,0 +1,5 @@
+# flutter gen-l10n (Hari 4, Lab 4C). Kode dibuat di lib/l10n/.
+arb-dir: lib/l10n
+template-arb-file: app_id.arb
+output-localization-file: app_localizations.dart
+nullable-getter: false

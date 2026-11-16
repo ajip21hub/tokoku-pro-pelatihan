@@ -1,0 +1,16 @@
+{
+  "@@locale": "id",
+  "catalogTitle": "Katalog",
+  "searchTooltip": "Cari",
+  "offlineBanner": "Mode offline: menampilkan data tersimpan",
+  "retry": "Coba lagi",
+  "navCatalog": "Katalog",
+  "navCart": "Keranjang",
+  "navProfile": "Profil",
+  "cartTooltip": "{count, plural, =0{Keranjang kosong} other{{count} barang di keranjang}}",
+  "@cartTooltip": {
+    "description": "Tooltip dan label pembaca layar untuk tab keranjang",
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "languageLabel": "Bahasa"
+}

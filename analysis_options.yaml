@@ -1,0 +1,24 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - build/**
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - android/**
+    - ios/**
+    - web/**
+  language:
+    strict-casts: true
+    strict-raw-types: true
+
+# riverpod_lint 3 = analyzer plugin resmi (analysis_server_plugin), bukan
+# custom_lint. Berjalan otomatis di IDE, `dart analyze`, dan `flutter analyze`.
+plugins:
+  riverpod_lint: ^3.2.0
+
+linter:
+  rules:
+    - prefer_const_constructors
+    - unawaited_futures
+    - avoid_print

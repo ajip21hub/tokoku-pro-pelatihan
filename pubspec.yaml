@@ -1,0 +1,97 @@
+name: tokoku_pro
+description: "TokoKu Pro — starter Pelatihan Flutter Lanjutan. Lengkapi bersama lab Hari 1–5."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.0
+
+# Pub workspace (monorepo): root ini sekaligus app Flutter.
+# Lab Capstone 1, Langkah 1: buat packages/tokoku_core, lalu buka komentar
+# dua baris di bawah ini dan baris `tokoku_core` di dependencies.
+# workspace:
+#   - packages/tokoku_core
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any # versinya dikunci oleh flutter_localizations
+  material_ui: ^1.11.0
+  # tokoku_core: ^1.0.0 # Lab Capstone 1
+
+  # State & model
+  flutter_riverpod: ^3.5.0
+  riverpod_annotation: ^4.0.8
+  # Pembanding Riverpod (Hari 1, Sesi 6)
+  flutter_bloc: ^9.1.1
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.12.0
+
+  # Jaringan & real-time
+  dio: ^5.11.1
+  crypto: ^3.0.8
+  web_socket_channel: ^3.0.3
+  http: ^1.6.0
+
+  # Navigasi
+  go_router: ^18.1.4
+
+  # Data lokal & background
+  drift: ^2.35.4
+  drift_flutter: ^0.3.1
+  sqlite3: ^3.5.2 # build SQLite dipilih lewat hooks di bawah
+  flutter_secure_storage: ^11.2.0
+  shared_preferences: ^2.5.6
+  connectivity_plus: ^7.3.2
+  workmanager: ^0.10.10
+
+  # UI
+  cupertino_icons: ^1.0.8
+  cached_network_image: ^4.0.6
+
+  # Firebase (Hari 5)
+  firebase_core: ^5.1.0
+  firebase_messaging: ^17.0.1
+  firebase_crashlytics: ^6.0.1
+  firebase_remote_config: ^7.0.1
+  firebase_app_check: ^0.5.1
+  firebase_ai: ^5.1.0
+  firebase_analytics: ^13.0.1
+  flutter_local_notifications: ^23.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.17.1
+  riverpod_generator: ^4.0.10
+  freezed: ^4.0.3
+  json_serializable: ^6.15.2
+  drift_dev: ^2.35.3
+  mocktail: ^1.0.5
+  pigeon: ^29.2.0
+  patrol: ^4.11.0
+  alchemist: ^0.14.1
+  leak_tracker_flutter_testing: ^3.0.10
+  shared_preferences_platform_interface: ^2.4.1
+
+flutter:
+  uses-material-design: true
+  # flutter gen-l10n: l10n.yaml + lib/l10n/app_id.arb sudah disiapkan agar
+  # kode Hari 1–3 yang memakai AppLocalizations langsung terkompilasi.
+  # Bahasa Inggris ditambahkan di Lab 4C (Hari 4).
+  generate: true
+
+# Enkripsi database (Hari 3): blok `hooks:` ditambahkan pada Sesi 2,
+# bagian "Enkripsi database".
+
+# Konfigurasi Patrol (Hari 4)
+patrol:
+  app_name: TokoKu Pro
+  test_directory: patrol_test
+  android:
+    package_name: id.pelatihan.tokoku_pro
