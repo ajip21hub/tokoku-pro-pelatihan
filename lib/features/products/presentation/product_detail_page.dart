@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tokoku_core/tokoku_core.dart';
 
+import '../../cart/presentation/cart_providers.dart';
 import 'product_list_controller.dart';
 
 class ProductDetailPage extends ConsumerWidget {
@@ -48,10 +49,15 @@ class ProductDetailPage extends ConsumerWidget {
                 child: FilledButton.icon(
                   icon: const Icon(Icons.add_shopping_cart),
                   label: const Text('Tambah ke Keranjang'),
-                  // Keranjang dibuat pada Hari 3 (Lab 3B).
-                  onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Keranjang aktif di Hari 3')),
-                  ),
+                  onPressed: () async {
+                    await ref
+                        .read(cartActionsProvider)
+                        .add(product.requireValue);
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Ditambahkan ke keranjang')),
+                    );
+                  },
                 ),
               ),
             )

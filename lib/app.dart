@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/settings/theme_mode_controller.dart';
+import 'features/cart/data/cart_sync_service.dart';
 import 'l10n/app_localizations.dart';
 import 'router/app_router.dart';
 import 'warmup/language_controller.dart';
@@ -12,6 +13,7 @@ class TokoKuApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(appRouterProvider);
+    ref.watch(cartSyncServiceProvider); // aktifkan auto-sync saat online
     final themeMode = ref.watch(themeModeControllerProvider).value;
     return MaterialApp.router(
       title: 'TokoKu Pro',
