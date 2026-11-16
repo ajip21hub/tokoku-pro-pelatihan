@@ -9,8 +9,8 @@ environment:
 # Pub workspace (monorepo): root ini sekaligus app Flutter.
 # Lab Capstone 1, Langkah 1: buat packages/tokoku_core, lalu buka komentar
 # dua baris di bawah ini dan baris `tokoku_core` di dependencies.
-# workspace:
-#   - packages/tokoku_core
+workspace:
+  - packages/tokoku_core
 
 dependencies:
   flutter:
@@ -19,7 +19,7 @@ dependencies:
     sdk: flutter
   intl: any # versinya dikunci oleh flutter_localizations
   material_ui: ^1.11.0
-  # tokoku_core: ^1.0.0 # Lab Capstone 1
+  tokoku_core: ^1.0.0
 
   # State & model
   flutter_riverpod: ^3.5.0

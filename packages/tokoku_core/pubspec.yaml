@@ -1,0 +1,17 @@
+name: tokoku_core
+description: Value object & utilitas murni Dart yang dipakai lintas fitur TokoKu Pro.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.13.0
+
+# Anggota pub workspace (lihat pubspec.yaml di root capstone).
+resolution: workspace
+
+# lib/ TIDAK boleh meng-import Flutter. Untuk test kita tetap memakai
+# flutter_test karena satu workspace = satu resolusi dependensi, dan versi
+# `package:test` terbaru bentrok dengan versi yang dipin oleh flutter_test.
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/settings/theme_mode_controller.dart';
-import 'features/auth/presentation/login_page.dart';
+import 'features/products/presentation/product_list_page.dart';
 import 'l10n/app_localizations.dart';
 
+/// Versi Hari 1: katalog langsung menjadi halaman awal. Tombol cari dan
+/// detail produk baru berfungsi setelah router dipasang pada Lab 2B.
 class TokoKuApp extends ConsumerWidget {
   const TokoKuApp({super.key});
 
@@ -19,10 +21,7 @@ class TokoKuApp extends ConsumerWidget {
       themeMode: themeMode ?? .system,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      // Lab Capstone 1 (Hari 1): ganti dengan `const ProductListPage()`.
-      // Lab 2B (Hari 2): ganti MaterialApp dengan MaterialApp.router
-      // (lihat `app.dart` di materi Hari 2).
-      home: const LoginPage(),
+      home: const ProductListPage(),
     );
   }
 }
