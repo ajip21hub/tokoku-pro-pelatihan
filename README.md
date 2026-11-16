@@ -51,3 +51,13 @@ git diff hari-2 hari-3 --stat     # lihat apa saja yang dikerjakan pada Hari 3
 ```
 
 Mulai `hari-4`, jalankan `flutter test --update-goldens test/golden` sekali sebelum `flutter test`. Golden platform (font asli) hanya dibuat di mesin Anda dan tidak di-commit.
+
+## Masalah umum
+
+**`Failed to copy plugin ...` / `rsync: mkdir ".../build/ios/SourcePackages/..." failed`** (macOS, Flutter 3.47): folder build iOS untuk Swift Package Manager belum ada. Jalankan:
+
+```bash
+mkdir -p build/ios/SourcePackages && flutter pub get
+```
+
+Ulangi setelah `flutter clean`. Di Windows dan Linux masalah ini tidak muncul.
