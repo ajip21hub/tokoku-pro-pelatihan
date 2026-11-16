@@ -1,0 +1,12 @@
+{
+  "@@locale": "en",
+  "catalogTitle": "Catalog",
+  "searchTooltip": "Search",
+  "offlineBanner": "Offline mode: showing saved data",
+  "retry": "Try again",
+  "navCatalog": "Catalog",
+  "navCart": "Cart",
+  "navProfile": "Profile",
+  "cartTooltip": "{count, plural, =0{Cart is empty} =1{1 item in cart} other{{count} items in cart}}",
+  "languageLabel": "Language"
+}

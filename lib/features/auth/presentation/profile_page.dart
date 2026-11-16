@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/platform/device_info_provider.dart';
 import '../../../core/settings/theme_mode_controller.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../../warmup/language_controller.dart';
 import 'auth_controller.dart';
 
 class ProfilePage extends ConsumerWidget {
@@ -12,6 +15,8 @@ class ProfilePage extends ConsumerWidget {
     final user = ref.watch(authControllerProvider).value;
     final ThemeMode themeMode =
         ref.watch(themeModeControllerProvider).value ?? .system;
+    final device = ref.watch(deviceInfoProvider).value;
+    final locale = ref.watch(currentLocaleProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Profil')),
@@ -24,6 +29,15 @@ class ProfilePage extends ConsumerWidget {
             ),
             subtitle: Text(user?.email ?? ''),
           ),
+          // Data dari kode native Kotlin lewat Pigeon (Hari 4).
+          if (device != null)
+            ListTile(
+              leading: const Icon(Icons.phone_android),
+              title: Text(device.model),
+              subtitle: Text(
+                'Android ${device.osVersion} • baterai ${device.batteryLevel}%',
+              ),
+            ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: SegmentedButton<ThemeMode>(
@@ -37,7 +51,19 @@ class ProfilePage extends ConsumerWidget {
                   ref.read(themeModeControllerProvider.notifier).set(s.single),
             ),
           ),
-          // Lab 4C: pemilih bahasa. Lab 4E: info perangkat dari Kotlin.
+          ListTile(
+            title: Text(AppLocalizations.of(context).languageLabel),
+            trailing: SegmentedButton<Locale>(
+              segments: const [
+                ButtonSegment(value: Locale('id'), label: Text('ID')),
+                ButtonSegment(value: Locale('en'), label: Text('EN')),
+              ],
+              selected: {locale},
+              onSelectionChanged: (s) => ref
+                  .read(languageControllerProvider.notifier)
+                  .change(s.single),
+            ),
+          ),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Keluar'),
