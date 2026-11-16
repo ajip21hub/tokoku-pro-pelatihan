@@ -43,3 +43,13 @@ patrol test -t patrol_test/app_flow_test.dart --flavor dev   # di device/emulato
 ```
 
 Firebase (`lib/firebase_options.dart`) masih placeholder: jalankan `flutterfire configure` sebelum memakai `config/dev_firebase.json` / `config/prod.json`.
+
+## Masalah umum
+
+**`Failed to copy plugin ...` / `rsync: mkdir ".../build/ios/SourcePackages/..." failed`** (macOS, Flutter 3.47): folder build iOS untuk Swift Package Manager belum ada. Jalankan:
+
+```bash
+mkdir -p build/ios/SourcePackages && flutter pub get
+```
+
+Ulangi setelah `flutter clean`. Di Windows dan Linux masalah ini tidak muncul.
