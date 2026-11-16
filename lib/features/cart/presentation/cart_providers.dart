@@ -4,6 +4,7 @@ import 'package:drift/drift.dart' show Value;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tokoku_core/tokoku_core.dart';
 
+import '../../../core/analytics/analytics_service.dart';
 import '../../../core/database/app_database.dart';
 import '../../products/domain/product.dart';
 import '../data/cart_sync_service.dart';
@@ -30,9 +31,10 @@ Stream<List<CartLine>> cartItems(Ref ref) =>
 }
 
 class CartActions {
-  CartActions(this._db, this._sync);
+  CartActions(this._db, this._sync, this._analytics);
   final AppDatabase _db;
   final CartSyncService _sync;
+  final AnalyticsService _analytics;
 
   /// Simpan lokal dulu (UI langsung update), lalu coba sync di belakang.
   Future<void> add(Product p) async {
@@ -44,6 +46,7 @@ class CartActions {
         thumbnail: p.thumbnail,
       ),
     );
+    _analytics.addToCart(p).ignore();
     unawaited(_sync.syncNow());
   }
 
@@ -56,4 +59,5 @@ class CartActions {
 CartActions cartActions(Ref ref) => CartActions(
   ref.watch(appDatabaseProvider),
   ref.watch(cartSyncServiceProvider),
+  ref.watch(analyticsProvider),
 );

@@ -143,4 +143,4 @@ final class CartActionsProvider
   }
 }
 
-String _$cartActionsHash() => r'2b129f7efb0e1c4e79104e0922b6f0ad8f9361b8';
+String _$cartActionsHash() => r'c802aa9e3975fe1a054e195c7985ca3c0cb29ba1';

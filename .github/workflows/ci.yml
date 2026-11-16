@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.9
+          cache: true
+
+      - run: flutter pub get # satu kali untuk seluruh workspace
+      - run: dart run build_runner build
+      - run: dart format --output=none --set-exit-if-changed lib test packages
+      - run: flutter analyze --fatal-infos # termasuk riverpod_lint
+      - name: Test paket workspace (tokoku_core)
+        run: flutter test
+        working-directory: packages/tokoku_core
+      - run: flutter test --coverage
+
+      - name: Quality gate — coverage minimal 70%
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq lcov
+          lcov --remove coverage/lcov.info '**/*.g.dart' '**/*.freezed.dart' \
+               -o coverage/lcov.info --ignore-errors unused
+          PCT=$(lcov --summary coverage/lcov.info | grep -oP 'lines\.*: \K[0-9.]+')
+          echo "Coverage: $PCT%"
+          echo "### Coverage: $PCT%" >> "$GITHUB_STEP_SUMMARY"
+          awk -v p="$PCT" 'BEGIN { exit (p < 70) }'

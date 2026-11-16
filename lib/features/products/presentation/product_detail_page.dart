@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tokoku_core/tokoku_core.dart';
 
+import '../../ai/product_ai_service.dart';
 import '../../cart/presentation/cart_providers.dart';
 import 'product_list_controller.dart';
 
@@ -36,6 +37,7 @@ class ProductDetailPage extends ConsumerWidget {
               'Rating ${value.rating} • stok ${value.stock}',
             ),
             const SizedBox(height: 8),
+            _AiSummaryCard(productId: productId),
             Text(value.description),
           ],
         ),
@@ -63,5 +65,43 @@ class ProductDetailPage extends ConsumerWidget {
             )
           : null,
     );
+  }
+}
+
+/// Ringkasan AI (Hari 5). Disembunyikan total bila feature flag mati.
+class _AiSummaryCard extends ConsumerWidget {
+  const _AiSummaryCard({required this.productId});
+  final int productId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final summary = ref.watch(productAiSummaryProvider(productId));
+    return switch (summary) {
+      AsyncData(value: null) => const SizedBox.shrink(),
+      AsyncData(:final value?) => Card(
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: .start,
+            children: [
+              Text(
+                'Ringkasan AI',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              const SizedBox(height: 4),
+              Text(value),
+              const SizedBox(height: 4),
+              Text(
+                'Dibuat oleh AI, bisa keliru.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+      ),
+      // Gagal AI tidak boleh merusak halaman detail -> diam saja.
+      AsyncError() => const SizedBox.shrink(),
+      _ => const LinearProgressIndicator(),
+    };
   }
 }

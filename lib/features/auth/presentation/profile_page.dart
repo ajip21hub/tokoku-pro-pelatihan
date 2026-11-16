@@ -1,6 +1,8 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/config/env.dart';
 import '../../../core/platform/device_info_provider.dart';
 import '../../../core/settings/theme_mode_controller.dart';
 import '../../../l10n/app_localizations.dart';
@@ -64,6 +66,13 @@ class ProfilePage extends ConsumerWidget {
                   .change(s.single),
             ),
           ),
+          // Tombol uji Crashlytics: hanya build dev yang mengaktifkan Firebase.
+          if (Env.isDev && Env.enableFirebase)
+            ListTile(
+              leading: const Icon(Icons.bug_report),
+              title: const Text('Test crash (dev)'),
+              onTap: () => FirebaseCrashlytics.instance.crash(),
+            ),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Keluar'),
